@@ -1,34 +1,42 @@
-import React from 'react';
-import Navbar from './components/Navbar';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import HomePage from './pages/HomePage.jsx';
-import SignUpPage from './pages/SignUpPage.jsx';
-import LoginPage from './pages/LoginPage.jsx';
-import SettingsPage from './pages/SettingsPage.jsx';
-import ProfilePage from './pages/ProfilePage.jsx';
-import { useAuthStore } from './store/useAuthStore.js';
-import { useEffect } from 'react';
+import Navbar from './components/Navbar';
+
+import HomePage from './pages/HomePage';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+import SettingsPage from './pages/SettingsPage';
+import ProfilePage from './pages/ProfilePage';
+
+import { useAuthStore } from './store/useAuthStore';
 
 const App = () => {
-  const { AuthUser, CheckAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
-    CheckAuth();
-  }, [CheckAuth]);
+    checkAuth();
+  }, [checkAuth]);
 
-  console.log({ AuthUser });
+  console.log({ authUser });
+
   return (
     <div>
       <Navbar />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-      </Routes>
+      {isCheckingAuth ? (
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <p>Checking authentication...</p>
+        </div>
+      ) : (
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+        </Routes>
+      )}
     </div>
   );
 };

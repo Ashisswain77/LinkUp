@@ -1,6 +1,12 @@
-const Navbar = () => {
+// components/Navbar.jsx
+import React from 'react';
 
-  return <div>Navbar</div>
+const Navbar = () => {
+  return (
+    <nav>
+      <h1>Navbar</h1>
+    </nav>
+  );
 };
 
 export default Navbar;
